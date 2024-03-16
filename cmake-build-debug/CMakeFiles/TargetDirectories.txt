@@ -1,0 +1,3 @@
+C:/Users/patry/CLionProjects/tablica_dynamiczna/cmake-build-debug/CMakeFiles/tablica_dynamiczna.dir
+C:/Users/patry/CLionProjects/tablica_dynamiczna/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/patry/CLionProjects/tablica_dynamiczna/cmake-build-debug/CMakeFiles/rebuild_cache.dir
