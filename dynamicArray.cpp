@@ -1,3 +1,4 @@
+GOOWNO
 #include "dynamicArray.h"
 
 dynamicArray::dynamicArray(int capacity) : dynamicArrayCapacity(capacity), dynamicArrayPtr(new int[capacity]) {
