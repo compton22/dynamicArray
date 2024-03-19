@@ -1,35 +1,42 @@
-#include <iostream>
 #include "dynamicArray.h"
+#include <iostream>
+#include <ctime>
 
 using namespace std;
 
 int main() {
+//    clock_t start, duration;
+//
+//    const unsigned numOfArrays = 100000; // Number of dynamicArray objects
+//    dynamicArray* arrays[numOfArrays];
+//
+//    // Tworzymy 10 000 tablic o pojemności 4
+//    for (int i = 0; i < numOfArrays; ++i) {
+//        arrays[i] = new dynamicArray(4);
+//    }
+//
+//    for(int k = 0; k < 10; k++) {
+//        start = clock();
+//        for(unsigned i = 0; i < numOfArrays; i++) {
+//            arrays[i]->addBack(5);
+//        }
+//        duration = clock() - start;
+//        double durationInSeconds = double(duration) / CLOCKS_PER_SEC;
+//        cout << "Time taken for adding elements to 10,000,000 dynamic arrays: " << durationInSeconds << " seconds" << endl;
+//    }
+//
+//    for (int i = 0; i < numOfArrays; ++i) {
+//        delete arrays[i];
+//    }
     dynamicArray arr(4);
+    arr.addBack(0);
+    arr.addBack(1);
+    arr.addBack(2);
+    arr.addBack(3);
+    //arr.add(2, 9);
 
-    arr.add(0, 5);
-    arr.add(1, 8);
-    arr.add(2,3);
-    arr.add(3, 11);
-    arr.add(4,21);
-    arr.add(2,7);
-    arr.remove(2);
-    arr.addBack(56);
-    arr.addBack(56);
-    arr.addBack(56);
-    arr.addBack(56);
-    arr.addBack(56);
-    arr.remove(9);
-    arr.removeBack();
-
-
-    cout << arr.getDynamicArraySize();
-    cout << endl;
-    arr.displayDynamicArrayWCapacity();
-    cout << endl;
     arr.displayDynamicArray();
-//    arr.add(1,2);
-//    cout << arr.getDynamicArraySize() << endl;
-//    arr.displayDynamicArray();
-//    arr.add(2,4);
-//    arr.add(0,7);
+    arr.displayDynamicArrayWCapacity();
+
+    return 0;
 }

@@ -61,6 +61,12 @@ build CMakeFiles/tablica_dynamiczna.dir/dynamicArray.cpp.obj: CXX_COMPILER__tabl
   OBJECT_DIR = CMakeFiles\tablica_dynamiczna.dir
   OBJECT_FILE_DIR = CMakeFiles\tablica_dynamiczna.dir
 
+build CMakeFiles/tablica_dynamiczna.dir/Zapis.cpp.obj: CXX_COMPILER__tablica_dynamiczna_Debug C$:/Users/patry/CLionProjects/tablica_dynamiczna/Zapis.cpp || cmake_object_order_depends_target_tablica_dynamiczna
+  DEP_FILE = CMakeFiles\tablica_dynamiczna.dir\Zapis.cpp.obj.d
+  FLAGS = -g -std=gnu++20
+  OBJECT_DIR = CMakeFiles\tablica_dynamiczna.dir
+  OBJECT_FILE_DIR = CMakeFiles\tablica_dynamiczna.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target tablica_dynamiczna
@@ -69,7 +75,7 @@ build CMakeFiles/tablica_dynamiczna.dir/dynamicArray.cpp.obj: CXX_COMPILER__tabl
 #############################################
 # Link the executable tablica_dynamiczna.exe
 
-build tablica_dynamiczna.exe: CXX_EXECUTABLE_LINKER__tablica_dynamiczna_Debug CMakeFiles/tablica_dynamiczna.dir/main.cpp.obj CMakeFiles/tablica_dynamiczna.dir/dynamicArray.cpp.obj
+build tablica_dynamiczna.exe: CXX_EXECUTABLE_LINKER__tablica_dynamiczna_Debug CMakeFiles/tablica_dynamiczna.dir/main.cpp.obj CMakeFiles/tablica_dynamiczna.dir/dynamicArray.cpp.obj CMakeFiles/tablica_dynamiczna.dir/Zapis.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\tablica_dynamiczna.dir

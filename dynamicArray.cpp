@@ -6,7 +6,7 @@ dynamicArray::dynamicArray(int capacity) : dynamicArrayCapacity(capacity), dynam
         dynamicArrayPtr[i] = NULL;
     }
 }
-dynamicArray::dynamicArray()
+dynamicArray::dynamicArray() : dynamicArraySize(0), dynamicArrayCapacity(0), dynamicArrayPtr(new int[0])
 {
     //konstruktor domyślny
 }
@@ -105,12 +105,16 @@ void dynamicArray::add(int index, int element) {
         return;
     }
 
-    increaseCapacity();
-
     if(index < dynamicArraySize) {
+        increaseCapacity();
+        dynamicArraySize++;
+        for (int i = dynamicArraySize; i > index; i--) {
+            dynamicArrayPtr[i+1] = dynamicArrayPtr[i];
+        }
         dynamicArrayPtr[index+1] = element;
     }else{
         //gdy index jest większy niż size, wstaw nowy element na pierwszą wolną pozycję
+        increaseCapacity();
         addBack(element);
     }
 }
@@ -131,6 +135,23 @@ void dynamicArray::remove(int index) {
 }
 
 void dynamicArray::removeBack() {
+    dynamicArraySize--;
+    decreaseCapacity();
+}
+
+void dynamicArray::addFront(int element) {
+    increaseCapacity();
+    dynamicArraySize++;
+    for (int i = dynamicArraySize; i > 0; i--) {
+        dynamicArrayPtr[i] = dynamicArrayPtr[i-1];
+    }
+    dynamicArrayPtr[1] = element;
+}
+
+void dynamicArray::removeFront() {
+    for (int i = 1; i < dynamicArraySize; i++) {
+        dynamicArrayPtr[i] = dynamicArrayPtr[i+1];
+    }
     dynamicArraySize--;
     decreaseCapacity();
 }
