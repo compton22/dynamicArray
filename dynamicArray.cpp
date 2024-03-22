@@ -11,21 +11,19 @@ dynamicArray::dynamicArray() : dynamicArraySize(0), dynamicArrayCapacity(0), dyn
     //konstruktor domyślny
 }
 dynamicArray::~dynamicArray() {
-    if (dynamicArrayPtr == NULL) return;
+    if (dynamicArrayPtr == nullptr) return;
     free(dynamicArrayPtr);
     dynamicArrayCapacity = 0;
     dynamicArraySize = 0;
-    dynamicArrayPtr = NULL;
+    dynamicArrayPtr = nullptr;
 }
 
 void dynamicArray::increaseCapacity() {
     // Sprawdzamy, czy tablica ma wystarczającą pojemność
     if (dynamicArraySize == dynamicArrayCapacity) {
-        // Zwiększamy pojemność dwukrotnie (capacity = 2 * size)
-        dynamicArrayCapacity *= 2;
 
         // Tworzymy nowy bufor o zwiększonej pojemności
-        int* buffer = new int[dynamicArrayCapacity];
+        int* buffer = new int[dynamicArrayCapacity*2];
 
         // Kopiujemy istniejące elementy do nowego bufora
         for (int i = 0; i < dynamicArraySize+1; i++) {
@@ -37,6 +35,7 @@ void dynamicArray::increaseCapacity() {
 
         // Przypisujemy nowy bufor do dynamicArrayPtr
         dynamicArrayPtr = buffer;
+        dynamicArrayCapacity *= 2;
     }
 }
 
@@ -62,7 +61,7 @@ void dynamicArray::decreaseCapacity() {
 }
 
 
-int dynamicArray::getDynamicArraySize() {
+int dynamicArray::getDynamicArraySize() const {
     return dynamicArraySize;
 }
 
@@ -154,4 +153,34 @@ void dynamicArray::removeFront() {
     }
     dynamicArraySize--;
     decreaseCapacity();
+}
+
+void dynamicArray::fillFromArrayCSV(const std::string& filename) {
+    // Otwieramy plik CSV
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Unable to open the file: " << filename << std::endl;
+        return;
+    }
+
+    std::string line;
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
+        std::string value;
+        while (std::getline(iss, value, ',')) {
+            int element;
+            try {
+                // Konwertujemy wartość z ciągu znaków na liczbę całkowitą
+                element = std::stoi(value);
+            } catch (const std::invalid_argument& e) {
+                // Ignorujemy nieprawidłowe wartości
+                continue;
+            }
+            // Dodajemy element do tablicy
+            addBack(element);
+        }
+    }
+
+    // Zamykamy plik
+    file.close();
 }

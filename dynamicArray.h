@@ -6,6 +6,7 @@
 #include <iostream>
 #include <random>
 #include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -22,7 +23,7 @@ public:
     dynamicArray(int capacity); //konstruktor z argumentem
     ~dynamicArray(); //destruktor
 
-    int getDynamicArraySize();
+    int getDynamicArraySize() const;
     bool isDynamicArrayEmpty();
     int getDynamicArrayElementAt(int index);
 
@@ -34,6 +35,8 @@ public:
     void remove(int index);
     void removeBack();
     void removeFront();
+
+    void fillFromArrayCSV(const string& filename);
 };
 
 
