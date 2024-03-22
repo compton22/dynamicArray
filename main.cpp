@@ -24,18 +24,90 @@ void runTests(const unsigned numOfArrays, int j){
         arrays[i]->fillFromArrayCSV("random_numbers.csv");
     }
     char choice1;
-    cin >> choice1;
+    do {
+        cout << "1. addFront" << endl;
+        cout << "2. addBack" << endl;
+        cout << "3. add" << endl;
+        cout << "4. removeFront" << endl;
+        cout << "5. removeBack" << endl;
+        cout << "6. remove" << endl;
 
-    for(int k = 0; k < j; k++) {       start = clock();
-        for(unsigned i = 0; i < numOfArrays; i++) {
-            arrays[i] -> addBack(5);
+        cin >> choice1;
+        switch (choice1) {
+            case '1':
+                for (int k = 0; k < j; k++) {
+                    start = clock();
+                    for (unsigned i = 0; i < numOfArrays; i++) {
+                        arrays[i]->addFront(5);
+                    }
+                    duration = clock() - start;
+                    double durationInSeconds = double(duration) / CLOCKS_PER_SEC;
+                    plik_addBack.shot(k, unsigned(duration), numOfArrays);
+                }
+                break;
+            case '2':
+                for (int k = 0; k < j; k++) {
+                    start = clock();
+                    for (unsigned i = 0; i < numOfArrays; i++) {
+                        arrays[i]->addBack(5);
+                    }
+                    duration = clock() - start;
+                    double durationInSeconds = double(duration) / CLOCKS_PER_SEC;
+                    plik_addBack.shot(k, unsigned(duration), numOfArrays);
+                }
+                break;
+            case '3':
+                for (int k = 0; k < j; k++) {
+                    start = clock();
+                    for (unsigned i = 0; i < numOfArrays; i++) {
+                        arrays[i]->add(5, 5);
+                    }
+                    duration = clock() - start;
+                    double durationInSeconds = double(duration) / CLOCKS_PER_SEC;
+                    plik_addBack.shot(k, unsigned(duration), numOfArrays);
+                }
+                break;
+            case '4':
+                for (int k = 0; k < j; k++) {
+                    start = clock();
+                    for (unsigned i = 0; i < numOfArrays; i++) {
+                        arrays[i]->removeFront();
+                    }
+                    duration = clock() - start;
+                    double durationInSeconds = double(duration) / CLOCKS_PER_SEC;
+                    plik_addBack.shot(k, unsigned(duration), numOfArrays);
+                }
+                break;
+            case '5':
+                for (int k = 0; k < j; k++) {
+                    start = clock();
+                    for (unsigned i = 0; i < numOfArrays; i++) {
+                        arrays[i]->removeBack();
+                    }
+                    duration = clock() - start;
+                    double durationInSeconds = double(duration) / CLOCKS_PER_SEC;
+                    plik_addBack.shot(k, unsigned(duration), numOfArrays);
+                }
+                break;
+            case '6':
+                for (int k = 0; k < j; k++) {
+                    start = clock();
+                    for (unsigned i = 0; i < numOfArrays; i++) {
+                        arrays[i]->remove(5);
+                    }
+                    duration = clock() - start;
+                    double durationInSeconds = double(duration) / CLOCKS_PER_SEC;
+                    plik_addBack.shot(k, unsigned(duration), numOfArrays);
+                }
+                break;
+            case '7':
+                cout << "Exiting..." << endl;
+                break;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
         }
-        duration = clock() - start;
-        double durationInSeconds = double(duration) / CLOCKS_PER_SEC;
-        plik_addBack.shot(k, unsigned(duration), numOfArrays);
-    }
 
-    arrays[1] -> displayDynamicArray();
+    } while (choice1 != '7');
 
     for (int i = 0; i < numOfArrays; ++i) {
         delete arrays[i];
@@ -56,7 +128,12 @@ int main() {
             case '1':
                 break;
             case '2':
-                runTests(10000, 10);
+                cout << "Running tests..." << endl;
+                cout << "Please choose the number of arrays, "
+                        "than hit enter and choose the number of iteration: " << endl;
+                int numOfArrays, j;
+                cin >> numOfArrays >> j;
+                runTests(numOfArrays, j);
                 break;
             case '3':
                 cout << "Exiting..." << endl;
