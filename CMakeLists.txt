@@ -4,4 +4,3 @@
     set(CMAKE_CXX_STANDARD 20)
 
     add_executable(tablica_dynamiczna main.cpp dynamicArray.cpp Zapis.cpp test.cpp)
-s

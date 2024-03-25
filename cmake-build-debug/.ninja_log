@@ -1,11 +1,17 @@
 # ninja log v5
-3	5500	7330232229159204	CMakeFiles/tablica_dynamiczna.dir/main.cpp.obj	13665df62ee420ef
-5500	5860	7330232232903535	tablica_dynamiczna.exe	a47b23c1cc494856
-15	1058	7330244258320504	CMakeFiles/tablica_dynamiczna.dir/dynamicArray.cpp.obj	3016e4d10f713c8b
-10	810	7330244743697654	CMakeFiles/tablica_dynamiczna.dir/Zapis.cpp.obj	d12bb41185366cf8
-24	1117	7330244258924343	CMakeFiles/tablica_dynamiczna.dir/test.cpp.obj	6ded42cc80c93c43
-14	1351	7330247983729132	CMakeFiles/tablica_dynamiczna.dir/Zapis.cpp.obj	a0f725da80202da5
-19	1579	7330247986027629	CMakeFiles/tablica_dynamiczna.dir/dynamicArray.cpp.obj	c97b7939fa46165
-11	4901	7330248110668477	CMakeFiles/tablica_dynamiczna.dir/test.cpp.obj	1e66ddc749e7e736
-4	6563	7330248127406647	CMakeFiles/tablica_dynamiczna.dir/main.cpp.obj	13665df62ee420ef
-6563	6904	7330248130402308	tablica_dynamiczna.exe	a47b23c1cc494856
+5	869	7330633914579343	CMakeFiles/tablica_dynamiczna.dir/main.cpp.obj	13665df62ee420ef
+0	206	7330812792127213	build.ninja	dd7e04e66db427e9
+870	977	7330633915611897	tablica_dynamiczna.exe	a47b23c1cc494856
+1228	2160	7330629405552041	CMakeFiles/tablica_dynamiczna.dir/dynamicArray.cpp.obj	c97b7939fa46165
+4	1227	7330629396119667	CMakeFiles/tablica_dynamiczna.dir/Zapis.cpp.obj	a0f725da80202da5
+8	1578	7330629399708457	CMakeFiles/tablica_dynamiczna.dir/test.cpp.obj	1e66ddc749e7e736
+9	5190	7330815951640535	CMakeFiles/tablica_dynamiczna.dir/main.cpp.obj	13665df62ee420ef
+5193	5418	7330815953772906	tablica_dynamiczna.exe	a47b23c1cc494856
+8	5653	7330818791068179	CMakeFiles/tablica_dynamiczna.dir/main.cpp.obj	13665df62ee420ef
+5654	6122	7330818795695821	tablica_dynamiczna.exe	a47b23c1cc494856
+7	11263	7330819346185240	CMakeFiles/tablica_dynamiczna.dir/main.cpp.obj	13665df62ee420ef
+11269	12385	7330819367182357	tablica_dynamiczna.exe	a47b23c1cc494856
+6	6347	7330821197236522	CMakeFiles/tablica_dynamiczna.dir/main.cpp.obj	13665df62ee420ef
+6352	7151	7330821205307625	tablica_dynamiczna.exe	a47b23c1cc494856
+10	2573	7330827039550841	CMakeFiles/tablica_dynamiczna.dir/main.cpp.obj	13665df62ee420ef
+2575	2901	7330827041821950	tablica_dynamiczna.exe	a47b23c1cc494856

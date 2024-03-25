@@ -1,12 +1,11 @@
 #include "dynamicArray.h"
 #include "Zapis.h"
 #include "test.h"
-#include <cstdlib>
-
-
+#include "cstdlib"
 #include <ctime>
 
 using namespace std;
+
 
 void runDynamicArray() {
     dynamicArray dynamicArray1(4);
@@ -243,6 +242,7 @@ int main() {
                 cout << "Invalid choice. Please try again." << endl;
                 break;
         }
+
     } while (choice != '3');
 
     return 0;
