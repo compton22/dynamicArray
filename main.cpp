@@ -6,7 +6,6 @@
 
 using namespace std;
 
-
 void runDynamicArray() {
     dynamicArray dynamicArray1(4);
     int element, index;
@@ -98,12 +97,18 @@ void runTests(const unsigned numOfArrays, int j){
     Zapis plik_removeFront("ArrayList_removeFront.csv");
     Zapis plik_removeBack("ArrayList_removeBack.csv");
     Zapis plik_remove("ArrayList_remove.csv");
+    Zapis plik_find("ArrayList_find.csv");
 
-    test::generateRandomNumbers(100, 0, 525, "random_numbers.csv", 5);
+    test::generateRandomNumbers(500, 0, 525, "random_numbers.csv", 5);
+    test::generateRandomNumbers(500, 0, 525, "random_numbersi.csv", 3);
+
 
      // Number of dynamicArray objects
     dynamicArray* arrays[numOfArrays];
     dynamicArray* backupArrays[numOfArrays];
+
+    dynamicArray dynamicArray2(4);
+    dynamicArray2.fillFromArrayCSV("random_numbersi.csv");
 
     // Tworzymy 10 000 tablic o pojemności 4
     for (int i = 0; i < numOfArrays; ++i) {
@@ -115,6 +120,7 @@ void runTests(const unsigned numOfArrays, int j){
         arrays[i]->fillFromArrayCSV("random_numbers.csv");
         backupArrays[i] -> fillFromArrayCSV("random_numbers.csv");
     }
+
     char choice1;
     do {
         cout << "1. addFront" << endl;
@@ -123,7 +129,8 @@ void runTests(const unsigned numOfArrays, int j){
         cout << "4. removeFront" << endl;
         cout << "5. removeBack" << endl;
         cout << "6. remove" << endl;
-        cout << "7. Exit" << endl;
+        cout << "7. find number" << endl;
+        cout << "8. Exit" << endl;
 
         cin >> choice1;
         switch (choice1) {
@@ -151,9 +158,10 @@ void runTests(const unsigned numOfArrays, int j){
                 break;
             case '3':
                 for (int k = 0; k < j; k++) {
+                    int index = dynamicArray2.getDynamicArrayElementAt(k);
                     start = clock();
                     for (unsigned i = 0; i < numOfArrays; i++) {
-                        arrays[i]->add(5, 5);
+                        arrays[i]->add(index, 5);
                     }
                     duration = clock() - start;
                     double durationInSeconds = double(duration) / CLOCKS_PER_SEC;
@@ -184,9 +192,11 @@ void runTests(const unsigned numOfArrays, int j){
                 break;
             case '6':
                 for (int k = 0; k < j; k++) {
+                    int index = dynamicArray2.getDynamicArrayElementAt(k);
                     start = clock();
+
                     for (unsigned i = 0; i < numOfArrays; i++) {
-                        arrays[i]->remove(5);
+                        arrays[i]->remove(index);
                     }
                     duration = clock() - start;
                     double durationInSeconds = double(duration) / CLOCKS_PER_SEC;
@@ -194,18 +204,31 @@ void runTests(const unsigned numOfArrays, int j){
                 }
                 break;
             case '7':
+                for (unsigned i = 0; i < j; i++) {
+                    int number = dynamicArray2.getDynamicArrayElementAt(i);
+                    start = clock();
+                    for (int j = 0; j < numOfArrays; j++) {
+                        if (arrays[i]->getDynamicArrayElementAt(j) == 9) {
+                            break;
+                        }
+                    }
+                    duration = clock() - start;
+                    plik_find.shot(i, unsigned(duration), numOfArrays);
+                }
+                break;
+            case '8':
                 cout << "Exiting..." << endl;
                 break;
             default:
                 cout << "Invalid choice. Please try again." << endl;
         }
-        arrays[1]->displayDynamicArray();
+        //arrays[1]->displayDynamicArray();
         for (unsigned i = 0; i < numOfArrays; i++) {
             arrays[i] = backupArrays[i];
         }
 
 
-    } while (choice1 != '7');
+    } while (choice1 != '8');
 
     for (int i = 0; i < numOfArrays; ++i) {
         delete arrays[i];
