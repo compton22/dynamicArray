@@ -3,6 +3,7 @@
 #include "test.h"
 #include "cstdlib"
 #include <ctime>
+#include <chrono>
 
 using namespace std;
 
@@ -79,7 +80,7 @@ void runDynamicArray() {
                 break;
             case '12':
                 cout << "Filling the dynamicArray from a CSV file: random_numbers.csv ..." << endl;
-                dynamicArray1.fillFromArrayCSV("random_numbers.csv");
+                dynamicArray1.fillFromArrayCSV("random_numbers.csv", 50000);
                 break;
             case '13':
                 cout << "Exiting..." << endl;
@@ -89,8 +90,7 @@ void runDynamicArray() {
     } while (choice2 != '13');
 }
 
-void runTests(const unsigned numOfArrays, int j){
-    clock_t start, duration;
+void testing(const unsigned numOfArrays, int size, int iteration){
     Zapis plik_addFront("ArrayList_addFront.csv");
     Zapis plik_addBack("ArrayList_addBack.csv");
     Zapis plik_add("ArrayList_add.csv");
@@ -99,141 +99,196 @@ void runTests(const unsigned numOfArrays, int j){
     Zapis plik_remove("ArrayList_remove.csv");
     Zapis plik_find("ArrayList_find.csv");
 
-    test::generateRandomNumbers(500, 0, 525, "random_numbers.csv", 5);
-    test::generateRandomNumbers(500, 0, 525, "random_numbersi.csv", 3);
-
-
-     // Number of dynamicArray objects
-    dynamicArray* arrays[numOfArrays];
-    dynamicArray* backupArrays[numOfArrays];
-
     dynamicArray dynamicArray2(4);
-    dynamicArray2.fillFromArrayCSV("random_numbersi.csv");
+    dynamicArray2.fillFromArrayCSV("random_numbersi.csv", 50000);
 
-    // Tworzymy 10 000 tablic o pojemności 4
+    cout << "Please wait..." << endl;
+    dynamicArray *arrays[numOfArrays];
+    dynamicArray *backupArrays[numOfArrays];
+
+    // Tworzymy numOfArrays tablic o pojemności 4
     for (int i = 0; i < numOfArrays; ++i) {
         arrays[i] = new dynamicArray(4);
         backupArrays[i] = new dynamicArray(4);
     }
-
-    for (int i = 0; i < numOfArrays; ++i) {
-        arrays[i]->fillFromArrayCSV("random_numbers.csv");
-        backupArrays[i] -> fillFromArrayCSV("random_numbers.csv");
+    for (int i = 0; i < numOfArrays; i++) {
+        arrays[i]->fillFromArrayCSV("random_numbers.csv", size);
+        backupArrays[i]->fillFromArrayCSV("random_numbers.csv", size);
     }
 
-    char choice1;
-    do {
-        cout << "1. addFront" << endl;
-        cout << "2. addBack" << endl;
-        cout << "3. add" << endl;
-        cout << "4. removeFront" << endl;
-        cout << "5. removeBack" << endl;
-        cout << "6. remove" << endl;
-        cout << "7. find number" << endl;
-        cout << "8. Exit" << endl;
+    //cout << arrays[1]->getDynamicArraySize() << endl;
 
-        cin >> choice1;
-        switch (choice1) {
-            case '1':
-                for (int k = 0; k < j; k++) {
-                    start = clock();
-                    for (unsigned i = 0; i < numOfArrays; i++) {
-                        arrays[i]->addFront(5);
-                    }
-                    duration = clock() - start;
-                    double durationInSeconds = double(duration) / CLOCKS_PER_SEC;
-                    plik_addFront.shot(k, unsigned(duration), numOfArrays);
-                }
-                break;
-            case '2':
-                for (int k = 0; k < j; k++) {
-                    start = clock();
-                    for (unsigned i = 0; i < numOfArrays; i++) {
-                        arrays[i]->addBack(5);
-                    }
-                    duration = clock() - start;
-                    double durationInSeconds = double(duration) / CLOCKS_PER_SEC;
-                    plik_addBack.shot(k, unsigned(duration), numOfArrays);
-                }
-                break;
-            case '3':
-                for (int k = 0; k < j; k++) {
-                    int index = dynamicArray2.getDynamicArrayElementAt(k);
-                    start = clock();
-                    for (unsigned i = 0; i < numOfArrays; i++) {
-                        arrays[i]->add(index, 5);
-                    }
-                    duration = clock() - start;
-                    double durationInSeconds = double(duration) / CLOCKS_PER_SEC;
-                    plik_add.shot(k, unsigned(duration), numOfArrays);
-                }
-                break;
-            case '4':
-                for (int k = 0; k < j; k++) {
-                    start = clock();
-                    for (unsigned i = 0; i < numOfArrays; i++) {
-                        arrays[i]->removeFront();
-                    }
-                    duration = clock() - start;
-                    double durationInSeconds = double(duration) / CLOCKS_PER_SEC;
-                    plik_removeFront.shot(k, unsigned(duration), numOfArrays);
-                }
-                break;
-            case '5':
-                for (int k = 0; k < j; k++) {
-                    start = clock();
-                    for (unsigned i = 0; i < numOfArrays; i++) {
-                        arrays[i]->removeBack();
-                    }
-                    duration = clock() - start;
-                    double durationInSeconds = double(duration) / CLOCKS_PER_SEC;
-                    plik_removeBack.shot(k, unsigned(duration), numOfArrays);
-                }
-                break;
-            case '6':
-                for (int k = 0; k < j; k++) {
-                    int index = dynamicArray2.getDynamicArrayElementAt(k);
-                    start = clock();
+    //addFront
+    auto begin = std::chrono::high_resolution_clock::now();
+    for (unsigned i = 0; i < numOfArrays; i++) {
+        arrays[i]->addFront(5);
+    }
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    //double durationInNanoSeconds = double(duration) / CLOCKS_PER_SEC;
+    plik_addFront.shot(iteration, elapsed.count(), size);
+    //addBack
+    auto begin2 = std::chrono::high_resolution_clock::now();
+    for (unsigned i = 0; i < numOfArrays; i++) {
+        arrays[i]->addBack(5);
+    }
+    auto end2 = std::chrono::high_resolution_clock::now();
+    auto elapsed2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - begin2);
+    plik_addBack.shot(iteration, elapsed2.count(), size);
 
-                    for (unsigned i = 0; i < numOfArrays; i++) {
-                        arrays[i]->remove(index);
-                    }
-                    duration = clock() - start;
-                    double durationInSeconds = double(duration) / CLOCKS_PER_SEC;
-                    plik_remove.shot(k, unsigned(duration), numOfArrays);
-                }
-                break;
-            case '7':
-                for (unsigned i = 0; i < j; i++) {
-                    int number = dynamicArray2.getDynamicArrayElementAt(i);
-                    start = clock();
-                    for (int j = 0; j < numOfArrays; j++) {
-                        if (arrays[i]->getDynamicArrayElementAt(j) == 9) {
-                            break;
-                        }
-                    }
-                    duration = clock() - start;
-                    plik_find.shot(i, unsigned(duration), numOfArrays);
-                }
-                break;
-            case '8':
-                cout << "Exiting..." << endl;
-                break;
-            default:
-                cout << "Invalid choice. Please try again." << endl;
-        }
-        //arrays[1]->displayDynamicArray();
-        for (unsigned i = 0; i < numOfArrays; i++) {
-            arrays[i] = backupArrays[i];
-        }
+    //add
+    int index = dynamicArray2.getDynamicArrayElementAt(0);
+    auto begin3 = std::chrono::high_resolution_clock::now();
+    for (unsigned i = 0; i < numOfArrays; i++) {
+        arrays[i]->add(index, 5);
+    }
+    auto end3 = std::chrono::high_resolution_clock::now();
+    auto elapsed3 = std::chrono::duration_cast<std::chrono::nanoseconds>(end3 - begin3);
+    plik_add.shot(iteration, elapsed3.count(), size);
 
+    //removeFront
+    auto begin4 = std::chrono::high_resolution_clock::now();
+    for (unsigned i = 0; i < numOfArrays; i++) {
+        arrays[i]->removeFront();
+    }
+    auto end4 = std::chrono::high_resolution_clock::now();
+    auto elapsed4 = std::chrono::duration_cast<std::chrono::nanoseconds>(end4 - begin4);
+    plik_removeFront.shot(iteration, elapsed4.count(), size);
 
-    } while (choice1 != '8');
+    //removeBack
+    auto begin5 = std::chrono::high_resolution_clock::now();
+    for (unsigned i = 0; i < numOfArrays; i++) {
+        arrays[i]->removeBack();
+    }
+    auto end5 = std::chrono::high_resolution_clock::now();
+    auto elapsed5 = std::chrono::duration_cast<std::chrono::nanoseconds>(end5 - begin5);
+    plik_removeBack.shot(iteration, elapsed5.count(), size);
+
+    //remove
+    index = dynamicArray2.getDynamicArrayElementAt(0);
+    auto begin6 = std::chrono::high_resolution_clock::now();
+    for (unsigned i = 0; i < numOfArrays; i++) {
+        arrays[i]->remove(index);
+    }
+    auto end6 = std::chrono::high_resolution_clock::now();
+    auto elapsed6 = std::chrono::duration_cast<std::chrono::nanoseconds>(end6 - begin6);
+    plik_remove.shot(iteration, elapsed6.count(), size);
+
+    //find
+    auto begin7 = std::chrono::high_resolution_clock::now();
+    for (unsigned i = 0; i < numOfArrays; i++) {
+        int number = dynamicArray2.getDynamicArrayElementAt(i);
+        arrays[i]->findElement(number);
+    }
+    auto end7 = std::chrono::high_resolution_clock::now();
+    auto elapsed7 = std::chrono::duration_cast<std::chrono::nanoseconds>(end7 - begin7);
+    plik_find.shot(iteration, elapsed7.count(), size);
+
 
     for (int i = 0; i < numOfArrays; ++i) {
         delete arrays[i];
+        delete backupArrays[i];
     }
 }
+void runTests(const unsigned numOfArrays) {
+
+    test::generateRandomNumbers(80000, 0, 100000, "random_numbers.csv", 5);
+    test::generateRandomNumbers(80000, 0, 60000, "random_numbersi.csv", 3);
+
+    char choice3;
+    do {
+        cout << "1. array_10" << endl;
+        cout << "2. array_100" << endl;
+        cout << "3. array_1k" << endl;
+        cout << "4. array_2k" << endl;
+        cout << "5. array_4k" << endl;
+        cout << "6. array_8k" << endl;
+        cout << "7. array_16k" << endl;
+        cout << "8. array_32k" << endl;
+        cout << "9. array_64k" << endl;
+        cout << "X. array_128k" << endl;
+        cout << "A. Test all" << endl;
+        cout << "0. Exit" << endl;
+
+
+
+        cin >> choice3;
+        switch (choice3) {
+            case '0':
+                cout << "Exiting..." << endl;
+                break;
+            case '1':
+            {
+                testing(numOfArrays, 10,1);
+                break;
+            }
+            case '2':
+            {
+                testing(numOfArrays, 100, 2);
+                break;
+            }
+            case '3':
+            {
+                testing(numOfArrays, 1000, 3);
+                break;
+            }
+            case '4':
+            {
+                testing(numOfArrays, 2000, 4);
+                break;
+            }
+            case '5':
+            {
+                testing(numOfArrays, 4000, 5);
+                break;
+            }
+            case '6':
+            {
+                testing(numOfArrays, 8000, 6);
+                break;
+            }
+            case '7':
+            {
+                testing(numOfArrays, 16000, 7);
+                break;
+            }
+            case '8':
+            {
+                testing(numOfArrays, 32000, 8);
+                break;
+            }
+            case '9':
+            {
+                testing(numOfArrays, 64000, 9);
+                break;
+            }
+            case 'X':
+            {
+                testing(numOfArrays, 128000, 10);
+                break;
+            }
+            case 'A':
+            {
+                testing(numOfArrays, 10, 1);
+                testing(numOfArrays, 100, 2);
+                testing(numOfArrays, 1000, 3);
+                testing(numOfArrays, 2000, 4);
+                testing(numOfArrays, 4000, 5);
+                testing(numOfArrays, 8000, 6);
+                testing(numOfArrays, 16000, 7);
+                testing(numOfArrays, 32000, 8);
+                testing(numOfArrays, 64000, 9);
+                testing(numOfArrays, 128000, 10);
+                break;
+            }
+
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+                break;
+        }
+    } while (choice3 != '0');
+}
+
 
 int main() {
     char choice;
@@ -251,12 +306,11 @@ int main() {
                 break;
             case '2':
                 cout << "Running tests..." << endl;
-                cout << "Please choose the number of arrays, "
-                        "than hit enter and choose the number of iteration: " << endl;
-                int numOfArrays, j;
-                cin >> numOfArrays >> j;
+                cout << "Please choose the number of arrays, " << endl;
+                int numOfArrays;
+                cin >> numOfArrays;
                 cout << "Please wait..." << endl;
-                runTests(numOfArrays, j);
+                runTests(numOfArrays);
                 break;
             case '3':
                 cout << "Exiting..." << endl;

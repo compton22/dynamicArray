@@ -77,6 +77,15 @@ int dynamicArray::getDynamicArrayElementAt(int index) {
     return dynamicArrayPtr[index];
 }
 
+int dynamicArray::findElement(int element) {
+    for (int i = 0; i < dynamicArraySize; i++) {
+        if (dynamicArrayPtr[i] == element) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 void dynamicArray::displayDynamicArrayWCapacity() {
     for(int i = 1; i < dynamicArrayCapacity+1; i++) {
         cout << dynamicArrayPtr[i] << "\t"; // Wyświetlamy wartość na pozycji i
@@ -155,7 +164,7 @@ void dynamicArray::removeFront() {
     decreaseCapacity();
 }
 
-void dynamicArray::fillFromArrayCSV(const std::string& filename) {
+void dynamicArray::fillFromArrayCSV(const std::string& filename, int maxElements) {
     // Otwieramy plik CSV
     std::ifstream file(filename);
     if (!file.is_open()) {
@@ -164,10 +173,11 @@ void dynamicArray::fillFromArrayCSV(const std::string& filename) {
     }
 
     std::string line;
-    while (std::getline(file, line)) {
+    int elementsAdded = 0;
+    while (std::getline(file, line) && elementsAdded < maxElements) {
         std::istringstream iss(line);
         std::string value;
-        while (std::getline(iss, value, ',')) {
+        while (std::getline(iss, value, ',') && elementsAdded < maxElements) {
             int element;
             try {
                 // Konwertujemy wartość z ciągu znaków na liczbę całkowitą
@@ -178,6 +188,7 @@ void dynamicArray::fillFromArrayCSV(const std::string& filename) {
             }
             // Dodajemy element do tablicy
             addBack(element);
+            elementsAdded++;
         }
     }
 
